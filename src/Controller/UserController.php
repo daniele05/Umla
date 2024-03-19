@@ -64,7 +64,7 @@ class UserController extends AbstractController
     }
 
 
-   #[Route('/profile.html')]
+       #[Route('/profile.html')]
     public function profile(){
         return $this->render('user/profile.html.twig');
 

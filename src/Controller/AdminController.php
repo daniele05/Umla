@@ -7,11 +7,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
-
-
-    #[Route('/admin/validateDoctorUserRegistration')]
+    #[Route('/admin/dashboard')]
     #Ex. http://127.0.0.1:8000/
-    public function validateDoctorUserRegistration()
+    public function dashboard()
+    {
+        return new Response();
+
+    }
+
+
+    #[Route('/admin/validateUsersRegistration')]
+    #Ex. http://127.0.0.1:8000/
+    public function validateUsersRegistration()
     {
         $doctoruser= new DoctorUser();
         $doctoruser->setFirstName();

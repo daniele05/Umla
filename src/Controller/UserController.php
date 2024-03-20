@@ -49,7 +49,7 @@ class UserController extends AbstractController
             $manager->flush();
 
             #Notification
-            $this->addFlash('success', 'Féliciattion, vous pouvez vous connecter.');
+            $this->addFlash('success', 'Féliciation, vous pouvez vous connecter.');
             # stockage en session une fois affichée , elle est supprimé du navigateur une fois actualisée.
 
             # Redirection

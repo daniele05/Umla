@@ -15,7 +15,6 @@ class AdminController extends AbstractController
 
     }
 
-
     #[Route('/admin/validateUsersRegistration')]
     #Ex. http://127.0.0.1:8000/
     public function validateUsersRegistration()

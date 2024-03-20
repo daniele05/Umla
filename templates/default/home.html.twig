@@ -3,10 +3,11 @@
 {% block title %}Page d'accueil{% endblock %}
 
 {% block body %}
+    <!--Section Header-->
 
     <div class="container-fluid mt-2">
         <div class="row">
-            <div class="jumbotron col-5 mr-5">
+            <div class="jumbotron col-7">
                 <h1 class="display-5 text-info">Umla</h1>
                 {% if app.user %}
                 <h3>Bonjour{{ app.user.lastName }},<br></h3>
@@ -50,13 +51,21 @@
         </div>
     </div>
 
+    <!--Section Cards nos services-->
     <div class="container-services m-4">
         <div class="overlay">
-            <div class="cols-5"></div>
+            <div class="row ">
+                <div class="col-3">
+                    <div class="p-3 mb-3"></div>
+                </div>
+                <div class="col-4">
+                    <div class="p-3 mb-3"></div>
+                </div>
+            </div>
         </div>
         <h3 class="text-center my-5">Nos Services</h3>
         <div class="container ">
-                <div class="row gy-3">
+                <div class="row">
                     <div class="col-sm text-center">
                         <div class="card h-100">
                             <img class="card-img-top" src="{{ asset('assets/images/specialites.jpg') }}" alt="Card image cap">
@@ -98,31 +107,30 @@
 
         </div>
     </div>
+<!--Section Posts-->
 
+    <div class="container-posts m-4">
 
-    <div class="container-fluid">
-        <div class="row-cols-2">
-            <div class="row-cols-3">
-                <h3 class="text-center my-5 lead">Forum</h3>
+        <div class="row ">
+            <div class="col-3">
+                <div class="p-3 mb-3"></div>
+            </div>
+            <div class="col-4">
+                <div class="p-3 mb-3"></div>
             </div>
         </div>
-        <div class="row-cols-7 h-100n w-25">
-            <div class="row-cols-7 h-100n w-75">
-                <img src="{{ asset('assets/images/Card Square.png') }}" class="card-img-top" alt="...">
-            </div>
 
-            <img src="{{ asset('assets/images/Card Square.png') }}" class="card-img-top" alt="...">
-        </div>
-
-
-
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <h3 class="text-center my-5">Posts</h3>
+        <div class="container ">
+             <div class="row">
+               <div class="col-sm text-center">
+                   <div class="card h-100">
+                       <img class="card-img-top" src="{{ asset('assets/images/image1.jpg') }}" alt="femme">
+                          <a href="#" class="btn btn-primary">Encore + </a>
+                   </div>
+               </div>
+             </div>
         </div>
     </div>
-
-
-
-
 
 {% endblock %}

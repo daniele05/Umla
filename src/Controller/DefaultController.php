@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Speciality;
 use App\Repository\DoctorUserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,41 +26,50 @@ class DefaultController extends AbstractController
     }
 
 
-    #[Route('/page/presentation.html,')]
+    #[Route('/page/presentation.html.',methods: ['GET'])]
     #Ex. http://127.0.0.1:8000/presentation
     public function presentation()
     {
-        return $this->render(view:"default/presentation.html.twig");
+        return $this->render(view:'default/presentation.html.twig');
 
     }
 
-
-    #[Route('/page/nosservices/nosspecialites.html')]
-    #Ex. http://127.0.0.1:8000/nosservices/nosspecialites
-    public function nosspecialites(): Response
+    #[Route('/page/specialites{slug}.html.twig',methods: ['GET'])]
+    #Ex. http://127.0.0.1:8000page/specialites/orthopedie
+    #{slug} represente un paramètre de la route
+    public function specialites($slug)
     {
-        return $this->render(view:"default/nosspecialites.html.");
+        $specialite = $this->getDoctrine()->getRepository(Speciality::class)->findOneBy(['slug'=>$slug]);
+        if(!$specialite){
+            throw  $this->createNotFoundException('Spécialité non trouvée pour le slug:'.$slug);
+        }
+        // Exemple de données à passer à la vue
+        $data = [
+            'specialite' => $specialite,
+        ];
+
+        return $this->render(view:'default/specialites.html.' , parameters: ['slug' => $slug]);
 
     }
-    #[Route('/page/nosservices/medecins.html')]
+    #[Route('/page/nosservices/medecins.html',methods: ['GET'])]
     #Ex. http://127.0.0.1:8000/nosservices/medecins
     public function medecins(): Response
     {
-        return $this->render(view:"default/medecins.html.");
+        return $this->render(view:'default/medecins.html.');
 
     }
-    #[Route('/page/nosservices/videoconsultation.html')]
+    #[Route('/videoconsultation.html',methods: ['GET'])]
     #Ex. http://127.0.0.1:8000/nosservices/videosonsulattion
     public function videoconsultation(): Response
     {
-        return $this->render(view:"default/videoconsultation.html.");
+        return $this->render(view:'default/videoconsultation.html.');
 
     }
-    #[Route('/page/nosservices/posologie.html')]
+    #[Route('/page/nosservices/posologie.html',methods: ['GET'])]
     #Ex. http://127.0.0.1:8000/nosservices/posologie
     public function posologie(): Response
     {
-        return $this->render(view:"default/posologie.html.");
+        return $this->render(view:'default/posologie.html.');
 
     }
 }

@@ -29,16 +29,15 @@ class Appointment
     #[ORM\OneToMany(targetEntity: MedicalReport::class, mappedBy: 'appointment')]
     private Collection $medicalreport;
 
-    #[ORM\ManyToMany(targetEntity: PatientUser::class, inversedBy: 'appointments')]
-    private Collection $patientuser;
-
     #[ORM\ManyToOne(inversedBy: 'appointments')]
     private ?TypeOfActs $typeofacts = null;
+
+    #[ORM\ManyToOne(inversedBy: 'appointments')]
+    private ?PatientUser $patientUser = null;
 
     public function __construct()
     {
         $this->medicalreport = new ArrayCollection();
-        $this->patientuser = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,30 +111,6 @@ class Appointment
         return $this;
     }
 
-    /**
-     * @return Collection<int, PatientUser>
-     */
-    public function getPatientuser(): Collection
-    {
-        return $this->patientuser;
-    }
-
-    public function addPatientuser(PatientUser $patientuser): static
-    {
-        if (!$this->patientuser->contains($patientuser)) {
-            $this->patientuser->add($patientuser);
-        }
-
-        return $this;
-    }
-
-    public function removePatientuser(PatientUser $patientuser): static
-    {
-        $this->patientuser->removeElement($patientuser);
-
-        return $this;
-    }
-
     public function getTypeofacts(): ?TypeOfActs
     {
         return $this->typeofacts;
@@ -144,6 +119,18 @@ class Appointment
     public function setTypeofacts(?TypeOfActs $typeofacts): static
     {
         $this->typeofacts = $typeofacts;
+
+        return $this;
+    }
+
+    public function getPatientUser(): ?PatientUser
+    {
+        return $this->patientUser;
+    }
+
+    public function setPatientUser(?PatientUser $patientUser): static
+    {
+        $this->patientUser = $patientUser;
 
         return $this;
     }

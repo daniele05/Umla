@@ -5,53 +5,55 @@ namespace App\Entity;
 use App\Repository\PatientUserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-
 #[ORM\Entity(repositoryClass: PatientUserRepository::class)]
-
-class PatientUser extends User
+class PatientUser
 {
-
+    #[ORM\Id]
     #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $pic_Patient_User = null;
+    #[ORM\Column]
+    private ?\DateTimeImmutable $birthAt = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $birthDate = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
 
-    #[ORM\ManyToMany(targetEntity: Appointment::class, mappedBy: 'patientuser')]
+    #[ORM\OneToMany(targetEntity: Appointment::class, mappedBy: 'patientUser')]
     private Collection $appointments;
 
     public function __construct()
     {
-        parent::__construct();
         $this->appointments = new ArrayCollection();
     }
 
-
-    public function getPicPatientUser(): ?string
+    public function getId(): ?int
     {
-        return $this->pic_Patient_User;
+        return $this->id;
     }
 
-    public function setPicPatientUser(string $pic_Patient_User): static
+    public function getBirthAt(): ?\DateTimeImmutable
     {
-        $this->pic_Patient_User = $pic_Patient_User;
+        return $this->birthAt;
+    }
+
+    public function setBirthAt(\DateTimeImmutable $birthAt): static
+    {
+        $this->birthAt = $birthAt;
 
         return $this;
     }
 
-    public function getBirthDate(): ?\DateTimeInterface
+    public function getImage(): ?string
     {
-        return $this->birthDate;
+        return $this->image;
     }
 
-    public function setBirthDate(\DateTimeInterface $birthDate): static
+    public function setImage(?string $image): static
     {
-        $this->birthDate = $birthDate;
+        $this->image = $image;
 
         return $this;
     }
@@ -68,7 +70,7 @@ class PatientUser extends User
     {
         if (!$this->appointments->contains($appointment)) {
             $this->appointments->add($appointment);
-            $appointment->addPatientuser($this);
+            $appointment->setPatientUser($this);
         }
 
         return $this;
@@ -77,7 +79,10 @@ class PatientUser extends User
     public function removeAppointment(Appointment $appointment): static
     {
         if ($this->appointments->removeElement($appointment)) {
-            $appointment->removePatientuser($this);
+            // set the owning side to null (unless already changed)
+            if ($appointment->getPatientUser() === $this) {
+                $appointment->setPatientUser(null);
+            }
         }
 
         return $this;
